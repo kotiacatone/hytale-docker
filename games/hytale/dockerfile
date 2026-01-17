@@ -1,7 +1,8 @@
 FROM --platform=$TARGETOS/$TARGETARCH eclipse-temurin:25-jdk
 
 LABEL org.opencontainers.image.source="https://github.com/kotiacatone/hytale-docker"
-LABEL org.opencontainers.image.licenses=MIT
+
+USER root
 
 RUN apt-get update -y \
     && apt-get install -y unzip jq curl ca-certificates fontconfig libfreetype6 \
