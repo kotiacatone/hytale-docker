@@ -1,25 +1,18 @@
-FROM --platform=$TARGETOS/$TARGETARCH ghcr.io/pyrodactyl-oss/images:java_25
+FROM --platform=$TARGETOS/$TARGETARCH eclipse-temurin:25-jdk
 
 LABEL org.opencontainers.image.source="https://github.com/kotiacatone/hytale-docker"
 LABEL org.opencontainers.image.licenses=MIT
 
-USER root
-
 RUN apt-get update -y \
-    && apt-get install -y unzip jq curl ca-certificates \
+    && apt-get install -y unzip jq curl ca-certificates fontconfig libfreetype6 \
+    && useradd -d /home/container -m container \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=ghcr.io/pterodactyl/yolks:java_25 /entrypoint.sh /java.sh
-RUN chmod +x /java.sh
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 USER container
 ENV USER=container HOME=/home/container
 WORKDIR /home/container
-
-COPY ./entrypoint.sh /entrypoint.sh
-
-USER root
-RUN chmod +x /entrypoint.sh
-USER container
 
 CMD [ "/bin/bash", "/entrypoint.sh" ]
