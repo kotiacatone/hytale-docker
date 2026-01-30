@@ -1,19 +1,13 @@
 FROM --platform=$TARGETOS/$TARGETARCH eclipse-temurin:25-jdk
-
 LABEL org.opencontainers.image.source="https://github.com/kotiacatone/hytale-docker"
-
 USER root
-
 RUN apt-get update -y \
     && apt-get install -y unzip jq curl ca-certificates fontconfig libfreetype6 \
     && useradd -d /home/container -m container \
     && rm -rf /var/lib/apt/lists/*
-
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
 USER container
 ENV USER=container HOME=/home/container
 WORKDIR /home/container
-
 CMD [ "/bin/bash", "/entrypoint.sh" ]
