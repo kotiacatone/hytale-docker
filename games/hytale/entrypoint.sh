@@ -7,11 +7,13 @@ echo "--- Hytale Server Setup (kotiacatone GitHub) ---"
 if [[ "${FORCE_UPDATE}" == "1" ]]; then
     echo "Force update enabled: cleaning up old server files..."
     rm -rf Server Assets.zip mods config.json version
+fi
 
 if [[ ! -f "./hytale-downloader/hytale-downloader-linux" ]]; then
-    echo "Error: Hytale Downloader not found! Проверьте скрипт установки (Install Script)."
+    echo "Error: Hytale Downloader not found! Проверьте скрипт установки."
     exit 1
 fi
+
 if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
     if [[ ! -d "Server" || "${FORCE_UPDATE}" == "1" ]]; then
         if [[ ! -f "HytaleServer.zip" ]]; then
